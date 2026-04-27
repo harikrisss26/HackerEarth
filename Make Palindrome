@@ -1,0 +1,30 @@
+import sys
+from collections import Counter
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    it = iter(input_data)
+    t = int(next(it))
+    results = []
+    
+    for _ in range(t):
+        n = int(next(it)) 
+        s = next(it)     
+        
+        counts = Counter(s)
+        odd_count = 0
+        
+        for char in counts:
+            if counts[char] % 2 != 0:
+                odd_count += 1
+    
+        cost = max(0, odd_count - 1)
+        results.append(str(cost))
+    
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
