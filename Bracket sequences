@@ -1,0 +1,27 @@
+s = input().strip()
+n = len(s)
+
+balance = 0
+prefix_sums = [0] * n
+
+for i in range(n):
+    if s[i] == '(':
+        balance += 1
+    else:
+        balance -= 1
+    prefix_sums[i] = balance
+
+if balance != 0:
+    print(0)
+else:
+    min_val = min(0, min(prefix_sums))
+    
+    count = 0
+    if min_val == 0:
+        count += 1
+        
+    for i in range(n - 1):
+        if prefix_sums[i] == min_val:
+            count += 1
+            
+    print(count)
