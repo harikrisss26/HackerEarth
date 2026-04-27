@@ -1,0 +1,47 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    T = int(input_data[0])
+    ptr = 1
+    results = []
+    
+    for _ in range(T):
+        N = int(input_data[ptr])
+        ptr += 1
+        A = [int(input_data[i]) for i in range(ptr, ptr + N)]
+        ptr += N
+        max_val = max(A)
+        K = 0
+        possible = True
+
+        for x in A:
+            K += (max_val - x)
+        
+        if N == 1:
+            results.append(str(-A[0]) if A[0] <= 0 else "-1")
+            continue
+
+        total_sum = sum(A)
+        divisor = 1 - N
+        
+        if total_sum % divisor != 0:
+            results.append("-1")
+        else:
+            K = total_sum // divisor
+            if K < 0:
+                results.append("-1")
+            else:
+                possible = True
+                for x in A:
+                    if x + K < 0:
+                        possible = False
+                        break
+                results.append(str(K) if possible else "-1")
+
+    sys.stdout.write("\n".join(results) + "\n")
+
+solve()
