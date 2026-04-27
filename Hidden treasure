@@ -1,0 +1,33 @@
+import sys
+
+def get_digit_sum(n):
+    n = abs(int(n))
+    s = 0
+    while n > 0:
+        s += n % 10
+        n //= 10
+    return s
+
+def main():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    n_count = int(input_data[0])
+    nums = input_data[1:n_count+1]
+    
+    digit_sum_counts = {}
+    
+    for val in nums:
+        d_sum = get_digit_sum(val)
+        digit_sum_counts[d_sum] = digit_sum_counts.get(d_sum, 0) + 1
+    
+    total_pairs = 0
+    for count in digit_sum_counts.values():
+        if count >= 2:
+            total_pairs += (count * (count - 1)) // 2
+            
+    print(total_pairs)
+
+if __name__ == "__main__":
+    main()
