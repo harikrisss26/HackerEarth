@@ -1,6 +1,7 @@
 import sys
 
 def solve():
+ 
     input_data = sys.stdin.read().split()
     if not input_data:
         return
@@ -10,38 +11,36 @@ def solve():
     results = []
     
     for _ in range(T):
+        if ptr >= len(input_data):
+            break
+            
         N = int(input_data[ptr])
         ptr += 1
-        A = [int(input_data[i]) for i in range(ptr, ptr + N)]
-        ptr += N
-        max_val = max(A)
-        K = 0
-        possible = True
-
-        for x in A:
-            K += (max_val - x)
         
-        if N == 1:
-            results.append(str(-A[0]) if A[0] <= 0 else "-1")
-            continue
-
+        A = []
+        for i in range(N):
+            A.append(int(input_data[ptr]))
+            ptr += 1
+            
         total_sum = sum(A)
-        divisor = 1 - N
+        K = -total_sum
         
-        if total_sum % divisor != 0:
+        if K < 0:
             results.append("-1")
+            continue
+            
+        possible = True
+        for x in A:
+            if x > K:
+                possible = False
+                break
+        
+        if possible:
+            results.append(str(K))
         else:
-            K = total_sum // divisor
-            if K < 0:
-                results.append("-1")
-            else:
-                possible = True
-                for x in A:
-                    if x + K < 0:
-                        possible = False
-                        break
-                results.append(str(K) if possible else "-1")
+            results.append("-1")
 
     sys.stdout.write("\n".join(results) + "\n")
 
-solve()
+if __name__ == "__main__":
+    solve()
