@@ -1,0 +1,48 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    ptr = 0
+    T_str = input_data[ptr]
+    ptr += 1
+    T = int(T_str)
+    
+    results = []
+    for _ in range(T):
+        N = int(input_data[ptr])
+        ptr += 1
+        A = list(map(int, input_data[ptr : ptr + N]))
+        ptr += N
+        
+        if N == 1:
+            if A[0] == 0:
+                results.append("0")
+            else:
+                results.append("-1")
+            continue
+
+        total_sum = sum(A)
+        
+        if total_sum % (N - 1) != 0:
+            results.append("-1")
+        else:
+            K = total_sum // (N - 1)
+            
+            possible = True
+            for x in A:
+                if x > K:
+                    possible = False
+                    break
+            
+            if possible:
+                results.append(str(K))
+            else:
+                results.append("-1")
+    
+    sys.stdout.write("\n".join(results) + "\n")
+
+if __name__ == "__main__":
+    solve()
