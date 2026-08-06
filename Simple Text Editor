@@ -1,0 +1,51 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+import java.util.Stack;
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer("");
+        
+        // Read number of queries
+        if (!st.hasMoreTokens()) {
+            String line = br.readLine();
+            if (line == null) return;
+            st = new StringTokenizer(line);
+        }
+        int q = Integer.parseInt(st.nextToken());
+        
+        StringBuilder s = new StringBuilder();
+        Stack<String> history = new Stack<>();
+        StringBuilder output = new StringBuilder();
+        
+        while (q-- > 0) {
+            if (!st.hasMoreTokens()) {
+                String line = br.readLine();
+                if (line == null) break;
+                st = new StringTokenizer(line);
+            }
+            
+            int type = Integer.parseInt(st.nextToken());
+            
+            if (type == 1) {
+                history.push(s.toString());
+                s.append(st.nextToken());
+            } else if (type == 2) {
+                history.push(s.toString());
+                int k = Integer.parseInt(st.nextToken());
+                s.delete(s.length() - k, s.length());
+            } else if (type == 3) {
+                int k = Integer.parseInt(st.nextToken());
+                output.append(s.charAt(k - 1)).append("\n");
+            } else if (type == 4) {
+                s = new StringBuilder(history.pop());
+            }
+        }
+        
+        // Print all outputs efficiently at once
+        System.out.print(output);
+    }
+}
